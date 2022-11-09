@@ -11,6 +11,7 @@
 
 "//".*$	|
 "/*".*$	|
+"*".*$	|
 "*/".*$	{printf("COMENTARIO\t%s\n", yytext );}
 
 \|	|
@@ -101,7 +102,9 @@ int main(int argc, char **argv) {
         perror(argv[1]);
         return (1);
       }
+	  
       curfilename = argv[i];  /* for addref */
+	  printf("\n\nARQUIVO:\t %s\n\n", curfilename );
       yyrestart(f);
       yylineno = 1;
       yylex();
