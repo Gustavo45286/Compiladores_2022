@@ -9,9 +9,15 @@
 
 %%
 
-"//".*$	|
-"/*".*$	|
-"*/".*$	{printf("COMENTARIO\t%s\n", yytext );}
+"//".*$	{printf("COMENTARIO\t%s\n", yytext );}
+"/*" { BEGIN(COMMENT); 
+		printf("COMENTARIO\t%s\n", yytext );
+		}
+<COMMENT>"*/" { BEGIN(INITIAL);
+			printf("COMENTARIO\t%s\n", yytext );
+			}
+<COMMENT>([^*]|\n)+|. {printf("COMENTARIO\t%s\n", yytext );} 
+<COMMENT><<EOF>> {printf("COMENTARIO\t%s\n", yytext );} 
 
 \|	|
 \,	|
